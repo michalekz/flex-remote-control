@@ -1,11 +1,58 @@
 {
-    "Debug" : true,
-    "FlexIP" : "85.207.20.227",
+    "Debug": true,
+    "FlexIP": "85.207.20.227",
     "UseDiscovery": false,
-    "FlexPort" : 4992,
-    "JogCoolDown" : 50,
-    "MidimapFile" : "hercules.xlsx",
-    "WindowsMidiName" : "DJControl Starlight",
-    "StationName" : "PROFA",
-    "SmartSDRClientID" : "FF1BA9E2-097E-4474-AE59-E9A048858B24"
+    "FlexPort": 4992,
+    "JogCoolDown": 50,
+    "MidimapFile": "hercules.xlsx",
+    "WindowsMidiName": "DJControl Starlight",
+    "StationName": "PROFA",
+    "SmartSDRClientID": "FF1BA9E2-097E-4474-AE59-E9A048858B24",
+    "TuningMode": "ModeB_Velocity",
+    "EncoderPulsesPerRotation": 246,
+    "TuningModes": {
+        "ModeA_Fine": {
+            "hzPerPulse": 4.07,
+            "hzPerRotation": 1000,
+            "throttle": 50,
+            "description": "Fine tuning (1 kHz per rotation)"
+        },
+        "ModeA_Coarse": {
+            "hzPerPulse": 20.33,
+            "hzPerRotation": 5000,
+            "throttle": 100,
+            "description": "Coarse tuning (5 kHz per rotation)"
+        },
+        "ModeB_Velocity": {
+            "anchorPoints": [
+                {
+                    "label": "slow",
+                    "velocity": 75,
+                    "hzPerPulse": 4.07,
+                    "hzPerRotation": 1000,
+                    "throttle": 50
+                },
+                {
+                    "label": "medium",
+                    "velocity": 250,
+                    "hzPerPulse": 20.33,
+                    "hzPerRotation": 5000,
+                    "throttle": 100
+                },
+                {
+                    "label": "fast",
+                    "velocity": 650,
+                    "hzPerPulse": 81.3,
+                    "hzPerRotation": 20000,
+                    "throttle": 200
+                }
+            ],
+            "interpolation": "linear",
+            "smoothingWindow": 10,
+            "stopThreshold": 150,
+            "description": "Velocity-based dynamic tuning (1-10 kHz)"
+        }
+    },
+    "TuningModeA": "ModeB_Velocity",
+    "TuningModeB": "ModeB_Velocity"
 }

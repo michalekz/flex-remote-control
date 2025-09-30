@@ -38,10 +38,12 @@ else {
 }
 
 const masterEmitter = new EventEmitter();
-const flexDominator = new FlexDominator(masterEmitter, defaults);
 
 var xxFlex = new xxFlexRadio(Config, defaults, masterEmitter);
 var controller = new Controller(Config, masterEmitter, configdir);
+
+// FlexDominator needs reference to controller for toggleTuningMode
+const flexDominator = new FlexDominator(masterEmitter, defaults, controller);
 
 Global.InConfigMode = false;
 Global.Layer = 0;
@@ -54,12 +56,16 @@ masterEmitter.on("ce", function (elm)
     {
         if(!Global.InConfigMode)
         {
-            // Wait for FlexRadio initialization before processing events
-            if(!xxFlex.IsInit || xxFlex.SliceNumbs.length === 0) {
+            // Some commands don't require FlexRadio (local controller operations)
+            const localCommands = ['toggleTuningMode'];
+            const requiresFlexRadio = !localCommands.includes(elm.MappedTo);
+
+            // Wait for FlexRadio initialization before processing events (except local commands)
+            if(requiresFlexRadio && (!xxFlex.IsInit || xxFlex.SliceNumbs.length === 0)) {
                 logger.debug(`FlexRadio not initialized yet, ignoring event for ${elm.Id}`);
                 return;
             }
-            
+
             if(flexDominator[elm.MappedTo] === undefined)
             {
                 logger.error(`Key ${elm.Id} not mapped to function "${elm.MappedTo}"`);

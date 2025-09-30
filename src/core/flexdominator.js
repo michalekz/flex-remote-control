@@ -1,10 +1,11 @@
 const { getLogger } = require("../core/logger.js");
 
 class flexDominator {
-    constructor(masterEmit, defcon) 
+    constructor(masterEmit, defcon, controller)
     {
         this.Emitter = masterEmit;
         this.Defcon = defcon;
+        this.Controller = controller; // Reference to MIDI controller (for toggleTuningMode)
         this.logger = getLogger();
     }
 
@@ -154,6 +155,58 @@ class flexDominator {
 
         this.logger.debug(`Step size: Slice${sl} → ${flx["Slice"+sl].step} Hz`);
         return "slice s "+ this.getRealSlice(sl, flx) + " step=" + flx["Slice"+sl].step;
+    }
+
+    /**
+     * Handle jog wheel frequency change (velocity-based tuning)
+     * Called from djcontrollerstarlight.handleJogWheelEvent()
+     * @param {object} elm - Element with frequency in State property
+     * @param {object} flx - FlexRadio state
+     * @returns {string} FlexRadio command
+     */
+    jogFrequencyChange(elm, flx)
+    {
+        const deltaHz = elm.State; // Frequency CHANGE in Hz from accumulator
+        const sl = this.getRequestedSlice(elm);
+
+        // Get current frequency from FlexRadio state (in MHz)
+        const currentFreqMHz = (sl === 0) ? flx.Slice0.RF_frequency : flx.Slice1.RF_frequency;
+        const currentFreqHz = currentFreqMHz * 1000000;
+
+        // Calculate new frequency
+        const newFreqHz = currentFreqHz + deltaHz;
+        const newFreqMHz = newFreqHz / 1000000;
+
+        // Update local state
+        if (sl === 0) {
+            flx.Slice0.RF_frequency = newFreqMHz;
+        } else {
+            flx.Slice1.RF_frequency = newFreqMHz;
+        }
+
+        const realSliceNum = this.getRealSlice(sl, flx);
+        this.logger.debug(`Jog tune: Slice${sl} ${currentFreqMHz.toFixed(6)} MHz → ${newFreqMHz.toFixed(6)} MHz (Δ${(deltaHz/1000).toFixed(2)} kHz, ${elm.velocity?.toFixed(1) || 'N/A'} ev/s, ${elm.mode || 'N/A'})`);
+
+        return `slice tune ${realSliceNum} ${newFreqMHz.toFixed(6)}`;
+    }
+
+    /**
+     * Toggle tuning mode (ModeA_Fine → ModeA_Coarse → ModeB_Velocity)
+     * Called from button mapping in Hercules.xlsx
+     * This is a wrapper that calls controller's toggleTuningMode()
+     * @param {object} elm - Element with Part property (A or B for left/right deck)
+     * @param {object} flx - FlexRadio state (not used)
+     * @returns {string} Empty string (no FlexRadio command needed)
+     */
+    toggleTuningMode(elm, flx)
+    {
+        // Call controller's toggleTuningMode() and pass elm to determine which deck
+        if (this.Controller && typeof this.Controller.toggleTuningMode === 'function') {
+            this.Controller.toggleTuningMode(elm);
+        } else {
+            this.logger.error("Controller not available or toggleTuningMode not implemented");
+        }
+        return ""; // No FlexRadio command needed
     }
 
     filters(elm, flx)
