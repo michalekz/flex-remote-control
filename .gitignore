@@ -37,3 +37,7 @@ coverage/
 
 # Archive (old unused files)
 archive/
+
+# Claude Code local files
+.claude/
+.claudecontext
