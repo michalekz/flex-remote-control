@@ -1,17 +1,71 @@
-const easymidi = require('easymidi');
+const midi = require('@julusian/midi');
 const deviceElement = require("./deviceelement.js");
 const readXlsxFile = require('read-excel-file/node');
 const { getLogger } = require("../core/logger.js");
-const path = require('path'); // ← PŘIDEJ
+const path = require('path');
 
 class controller {
     constructor(config, masteremit, publicdirname)
-    {    
+    {
         this.logger = getLogger();
-        this.Input = new easymidi.Input(config.WindowsMidiName);
-        this.Output = new easymidi.Output(config.WindowsMidiName);
-        this.MasterEmitter = masteremit;
 
+        // Initialize MIDI Input
+        this.Input = new midi.Input();
+        let inputPort = -1;
+        for (let i = 0; i < this.Input.getPortCount(); i++) {
+            if (this.Input.getPortName(i).includes(config.WindowsMidiName)) {
+                inputPort = i;
+                break;
+            }
+        }
+        if (inputPort === -1) {
+            throw new Error(`MIDI Input not found: ${config.WindowsMidiName}`);
+        }
+        this.Input.openPort(inputPort);
+
+        // Initialize MIDI Output
+        this.Output = new midi.Output();
+        let outputPort = -1;
+        for (let i = 0; i < this.Output.getPortCount(); i++) {
+            if (this.Output.getPortName(i).includes(config.WindowsMidiName)) {
+                outputPort = i;
+                break;
+            }
+        }
+        if (outputPort === -1) {
+            throw new Error(`MIDI Output not found: ${config.WindowsMidiName}`);
+        }
+        this.Output.openPort(outputPort);
+
+        // Add easymidi-compatible send() method
+        this.Output.send = (type, data) => {
+            let status, data1, data2;
+
+            switch(type) {
+                case 'noteon':
+                    status = 0x90 | (data.channel || 0);
+                    data1 = data.note;
+                    data2 = data.velocity;
+                    break;
+                case 'noteoff':
+                    status = 0x80 | (data.channel || 0);
+                    data1 = data.note;
+                    data2 = data.velocity || 0;
+                    break;
+                case 'cc':
+                    status = 0xB0 | (data.channel || 0);
+                    data1 = data.controller;
+                    data2 = data.value;
+                    break;
+                default:
+                    this.logger.error(`Unknown MIDI message type: ${type}`);
+                    return;
+            }
+
+            this.Output.sendMessage([status, data1, data2]);
+        };
+
+        this.MasterEmitter = masteremit;
         this.logger.info(`✓ MIDI: ${config.WindowsMidiName}`);
 
         this.OldCalledElement = new deviceElement();
@@ -52,9 +106,32 @@ class controller {
             this.logger.error(`Expected path: ${midiMapPath}`);
         });
 
-        this.Input.on('message', (msg) => {
-            this.logger.debug(`Raw MIDI: ${JSON.stringify(msg)}`);
-            this.handle(msg);
+        // @julusian/midi sends messages as (deltaTime, message) where message is an array
+        this.Input.on('message', (deltaTime, message) => {
+            this.logger.debug(`Raw MIDI: ${message} (dt: ${deltaTime})`);
+
+            // Convert @julusian/midi format to easymidi-compatible format
+            const status = message[0];
+            const messageType = status >> 4;
+            const channel = status & 0x0F;
+
+            const typeMap = {
+                0x8: 'noteoff',
+                0x9: 'noteon',
+                0xB: 'cc',
+                0xE: 'pitch'
+            };
+
+            const formattedMsg = {
+                _type: typeMap[messageType] || 'unknown',
+                channel: channel,
+                note: message[1],
+                velocity: message[2],
+                controller: message[1],
+                value: message[2]
+            };
+
+            this.handle(formattedMsg);
         });
     }
 
@@ -69,8 +146,8 @@ class controller {
     closePorts()
     {
         this.logger.info("Closing MIDI ports");
-        this.Input.close();
-        this.Output.close();
+        this.Input.closePort();
+        this.Output.closePort();
     }
 }
 

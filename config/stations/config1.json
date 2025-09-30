@@ -1,6 +1,6 @@
 {
-    "Debug" : false,
-    "FlexIP" : "192.168.2.50",
+    "Debug" : true,
+    "FlexIP" : "85.207.20.227",
     "UseDiscovery": false,
     "FlexPort" : 4992,
     "JogCoolDown" : 50,
