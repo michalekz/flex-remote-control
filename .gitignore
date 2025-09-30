@@ -13,6 +13,9 @@ yarn-error.log*
 .env.local
 .env.*.local
 
+# Local configuration files
+*.local
+
 # IDE
 .vscode/*
 !.vscode/launch.json
