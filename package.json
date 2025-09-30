@@ -1,0 +1,24 @@
+{
+  "name": "remoteHercules",
+  "version": "1.0.0",
+  "description": "FlexRadio remote control via Hercules Starlight MIDI controller",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "flexradio",
+    "midi",
+    "hercules",
+    "starlight"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@julusian/midi": "^3.6.1",
+    "easymidi": "^3.1.0",
+    "flexradio-js": "^1.2.5",
+    "read-excel-file": "^5.7.1"
+  }
+}

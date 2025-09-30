@@ -1,0 +1,11 @@
+{
+    "Debug" : false,
+    "FlexIP" : "192.168.2.50",
+    "UseDiscovery": false,
+    "FlexPort" : 4992,
+    "JogCoolDown" : 50,
+    "MidimapFile" : "hercules.xlsx",
+    "WindowsMidiName" : "DJControl Starlight",
+    "StationName" : "PROFA",
+    "SmartSDRClientID" : "FF1BA9E2-097E-4474-AE59-E9A048858B24"
+}

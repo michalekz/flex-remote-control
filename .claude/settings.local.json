@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//o/OneDrive/Projects/flex/config/**)",
+      "Bash(code:*)",
+      "Bash(mkdir:*)",
+      "Bash(node:*)",
+      "Bash(npm:*)",
+      "Bash(git --version)",
+      "Bash(git init:*)",
+      "Bash(git config:*)",
+      "Bash(dir:*)",
+      "Bash(git add:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

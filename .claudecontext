@@ -1,0 +1,48 @@
+# Flex Project Context
+
+## Project Overview
+FlexRadio control application - ovládání FlexRadio transceiveru přes Hercules DJControl Starlight MIDI controller a Node.js API.
+
+## Knowledge Base
+Documentation and resources are stored in `.claude/knowledge/`:
+
+### FlexRadio API Documentation
+- [FLEXRADIO_API_COMPLETE.md](.claude/knowledge/FlexRadio/FLEXRADIO_API_COMPLETE.md) - Kompletní dokumentace FlexRadio SmartSDR TCP/IP API, včetně command reference, discovery protokolu, metering, VITA-49 datových streamů
+- **Diagramy FlexRadio**:
+  - [Discovery2.png](.claude/knowledge/FlexRadio/Discovery2.png) - UDP discovery protokol (port 4992)
+  - [SMOOTHLAKE_Data_Model.png](.claude/knowledge/FlexRadio/SMOOTHLAKE_Data_Model.png) - Datový model SmartSDR (SCU, slices, panadapters, meters, streams)
+  - [FLEX-6500_Signal_Flow.png](.claude/knowledge/FlexRadio/FLEX-6500_Signal_Flow.png) - RF signálový tok pro FLEX-6500
+  - [FLEX-6700_Signal_Flow.png](.claude/knowledge/FlexRadio/FLEX-6700_Signal_Flow.png) - RF signálový tok pro FLEX-6700
+  - [Meter_Context_Packet.png](.claude/knowledge/FlexRadio/Meter_Context_Packet.png) - Struktura VITA-49 meter context packetu
+  - [Meter_Extension_Packet.png](.claude/knowledge/FlexRadio/Meter_Extension_Packet.png) - Struktura VITA-49 meter extension packetu
+  - [Reference_Selection_State_Diagram.png](.claude/knowledge/FlexRadio/Reference_Selection_State_Diagram.png) - Stavový diagram výběru reference
+  - [Stream_stat.png](.claude/knowledge/FlexRadio/Stream_stat.png) - Stream statistiky
+  - [TransmitStateDiagram.png](.claude/knowledge/FlexRadio/TransmitStateDiagram.png) - Stavový diagram vysílání
+
+### flexradio-js Node Module
+- [README.md](.claude/knowledge/flexradio-js Node Module/README.md) - JavaScript knihovna pro FlexRadio 6xxx, radio discovery, command & control, UDP meter data
+- [NOTES.md](.claude/knowledge/flexradio-js Node Module/NOTES.md) - Poznámky k meter datům (dBm, dBFS, volty, ampy)
+- [package.json](.claude/knowledge/flexradio-js Node Module/package.json) - NPM balíček v1.2.5, závislosti: binary-parser, vita49-js
+- **Hlavní moduly**: flex.js, Radio.js, DiscoveryListener.js, flex-parser.js
+- **Test data**: capture složka s PCAPNG soubory, CSV metery, command samples
+
+### Hercules StarLight Controller
+- [MIDI mapování a popis.pdf](.claude/knowledge/Hercules StarLight/MIDI mapování a popis.pdf) - Kompletní dokumentace ovládání FlexRadio pomocí Hercules DJControl Starlight (v1.1.0)
+  - **Funkce**: Dual slice control (A/B), VFO tuning, PTT, RIT/XIT, AGC, Volume, Variable Filter
+  - **MIDI mapping**: CUE/LOOP tlačítka, jogwheels, slidery, konfigurace v hercules.xlsx
+  - **Konfigurace**: globals.json, config<nr>.json, defaults.json, layer1/layer2 podpor
+  - **Multi-radio**: Podpora až 8 různých FlexRadio (config switching)
+  - **SmartSDR Client ID**: Multiflex podpora pro contest stanice
+- [hercules.xlsx](.claude/knowledge/Hercules StarLight/hercules.xlsx) - MIDI mapping konfigurace
+
+## Key Technologies
+- **FlexRadio SmartSDR**: TCP/IP API (port 4992), UDP discovery, VITA-49 streaming
+- **Node.js**: flexradio-js knihovna pro komunikaci s rádiem
+- **MIDI Controller**: Hercules DJControl Starlight jako fyzické rozhraní
+- **Protokoly**: TCP command/response, UDP broadcast discovery, VITA-49 real-time data
+
+## Architecture Notes
+- **Discovery**: UDP broadcast na port 4992 pro nalezení FlexRadio v síti
+- **Command & Control**: TCP connection, textový protokol, asynchronní status updates
+- **Real-time Data**: UDP VITA-49 packets pro panadapter a meter data
+- **MIDI Integration**: Windows MIDI driver, mapping přes Excel (hercules.xlsx)
