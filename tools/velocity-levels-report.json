@@ -1,0 +1,160 @@
+{
+  "measurements": {
+    "slow": [
+      {
+        "speedLabel": "slow",
+        "measurementNumber": 1,
+        "totalEvents": 226,
+        "eventsPerSecond": 45.2,
+        "avgDeltaTime": 15.44,
+        "minDeltaTime": 1,
+        "maxDeltaTime": 61,
+        "consistency": 34.552454520135356,
+        "directionChanges": 0,
+        "cwCount": 226,
+        "ccwCount": 0,
+        "duration": 5
+      },
+      {
+        "speedLabel": "slow",
+        "measurementNumber": 2,
+        "totalEvents": 439,
+        "eventsPerSecond": 87.8,
+        "avgDeltaTime": 11.401826484018265,
+        "minDeltaTime": 0,
+        "maxDeltaTime": 41,
+        "consistency": 36.39311846265034,
+        "directionChanges": 0,
+        "cwCount": 439,
+        "ccwCount": 0,
+        "duration": 5
+      },
+      {
+        "speedLabel": "slow",
+        "measurementNumber": 3,
+        "totalEvents": 414,
+        "eventsPerSecond": 82.8,
+        "avgDeltaTime": 12.070217917675544,
+        "minDeltaTime": 0,
+        "maxDeltaTime": 69,
+        "consistency": 33.50966083310784,
+        "directionChanges": 0,
+        "cwCount": 414,
+        "ccwCount": 0,
+        "duration": 5
+      }
+    ],
+    "medium": [
+      {
+        "speedLabel": "medium",
+        "measurementNumber": 1,
+        "totalEvents": 1319,
+        "eventsPerSecond": 263.8,
+        "avgDeltaTime": 3.7921092564491654,
+        "minDeltaTime": 0,
+        "maxDeltaTime": 15,
+        "consistency": 37.99353561012679,
+        "directionChanges": 0,
+        "cwCount": 1319,
+        "ccwCount": 0,
+        "duration": 5
+      },
+      {
+        "speedLabel": "medium",
+        "measurementNumber": 2,
+        "totalEvents": 1305,
+        "eventsPerSecond": 261,
+        "avgDeltaTime": 3.8328220858895707,
+        "minDeltaTime": 0,
+        "maxDeltaTime": 18,
+        "consistency": 36.511519274581026,
+        "directionChanges": 0,
+        "cwCount": 1305,
+        "ccwCount": 0,
+        "duration": 5
+      },
+      {
+        "speedLabel": "medium",
+        "measurementNumber": 3,
+        "totalEvents": 1362,
+        "eventsPerSecond": 272.4,
+        "avgDeltaTime": 3.6722997795738426,
+        "minDeltaTime": 0,
+        "maxDeltaTime": 12,
+        "consistency": 35.499752249135994,
+        "directionChanges": 0,
+        "cwCount": 1362,
+        "ccwCount": 0,
+        "duration": 5
+      }
+    ],
+    "fast": [
+      {
+        "speedLabel": "fast",
+        "measurementNumber": 1,
+        "totalEvents": 2966,
+        "eventsPerSecond": 593.2,
+        "avgDeltaTime": 1.6860033726812815,
+        "minDeltaTime": 0,
+        "maxDeltaTime": 93,
+        "consistency": -50.64297532468296,
+        "directionChanges": 0,
+        "cwCount": 2966,
+        "ccwCount": 0,
+        "duration": 5
+      },
+      {
+        "speedLabel": "fast",
+        "measurementNumber": 2,
+        "totalEvents": 3209,
+        "eventsPerSecond": 641.8,
+        "avgDeltaTime": 1.4389027431421446,
+        "minDeltaTime": 0,
+        "maxDeltaTime": 16,
+        "consistency": 18.849349205845,
+        "directionChanges": 0,
+        "cwCount": 3209,
+        "ccwCount": 0,
+        "duration": 5
+      },
+      {
+        "speedLabel": "fast",
+        "measurementNumber": 3,
+        "totalEvents": 3684,
+        "eventsPerSecond": 736.8,
+        "avgDeltaTime": 1.357588922074396,
+        "minDeltaTime": 0,
+        "maxDeltaTime": 59,
+        "consistency": -7.799272724821371,
+        "directionChanges": 0,
+        "cwCount": 3684,
+        "ccwCount": 0,
+        "duration": 5
+      }
+    ]
+  },
+  "summary": {
+    "slow": {
+      "avgEventsPerSecond": 71.93333333333334,
+      "avgDeltaTime": 12.970681467231268,
+      "minEventsPerSecond": 45.2,
+      "maxEventsPerSecond": 87.8,
+      "recommendedVelocity": 72
+    },
+    "medium": {
+      "avgEventsPerSecond": 265.7333333333333,
+      "avgDeltaTime": 3.7657437073041926,
+      "minEventsPerSecond": 261,
+      "maxEventsPerSecond": 272.4,
+      "recommendedVelocity": 266
+    },
+    "fast": {
+      "avgEventsPerSecond": 657.2666666666667,
+      "avgDeltaTime": 1.4941650126326074,
+      "minEventsPerSecond": 593.2,
+      "maxEventsPerSecond": 736.8,
+      "recommendedVelocity": 657
+    }
+  },
+  "timestamp": "2025-09-30T13:08:04.641Z"
+}

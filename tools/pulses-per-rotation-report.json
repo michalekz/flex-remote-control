@@ -1,0 +1,39 @@
+{
+  "measurements": [
+    {
+      "measurementNumber": 1,
+      "totalPulses": 253,
+      "dominantCount": 253,
+      "direction": "CW",
+      "duration": 3.829,
+      "cwCount": 253,
+      "ccwCount": 0,
+      "eventsPerSecond": 66.07469313136589
+    },
+    {
+      "measurementNumber": 2,
+      "totalPulses": 255,
+      "dominantCount": 255,
+      "direction": "CW",
+      "duration": 6.338,
+      "cwCount": 255,
+      "ccwCount": 0,
+      "eventsPerSecond": 40.233512148942886
+    },
+    {
+      "measurementNumber": 3,
+      "totalPulses": 231,
+      "dominantCount": 231,
+      "direction": "CW",
+      "duration": 2.993,
+      "cwCount": 231,
+      "ccwCount": 0,
+      "eventsPerSecond": 77.18008686936184
+    }
+  ],
+  "summary": {
+    "avgPulsesPerRotation": 246.33333333333334,
+    "recommendedValue": 246
+  },
+  "timestamp": "2025-09-30T12:59:16.596Z"
+}
